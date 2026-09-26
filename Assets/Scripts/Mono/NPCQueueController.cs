@@ -13,7 +13,9 @@ public class NPCQueueController : MonoBehaviour
 
     private int currentIndex = 0;
 
-    public UnityEvent onNPCChosen;
+    private NPCData NPC;
+
+    public UnityEvent<NPCData> onNPCChosen;
 
     void Start()
     {
@@ -35,6 +37,7 @@ public class NPCQueueController : MonoBehaviour
                 currentIndex = 0;
             }
             UpdateMugShot();
+            onNPCChosen?.Invoke(NPCs[currentIndex]);
         }
         else
         {

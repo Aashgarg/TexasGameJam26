@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     public enum GameState{
         waitingRoom,
         Interrogation,
@@ -20,6 +21,11 @@ public class GameManager : MonoBehaviour
     public NPCData currentNPC;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    void Awake()
+    {
+
+    }
     void Start()
     {
         
@@ -36,6 +42,7 @@ public class GameManager : MonoBehaviour
         waitingRoomUI.SetActive(false);
         currentState = GameState.Interrogation;
         interrogationUI.SetActive(true);
+        
     }
 
     public void switchToWaitingRoom()
