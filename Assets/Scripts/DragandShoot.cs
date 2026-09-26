@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class DragandShoot : MonoBehaviour
 {
     [SerializeField] private float power;
     [SerializeField] private float maxDragDistance;
     [SerializeField] private int trajectoryResolution;
+    [SerializeField] private Transform stick;
+    [SerializeField] private float offset;
 
     private Rigidbody2D rb;
     private Camera cam;
@@ -59,6 +62,7 @@ public class DragandShoot : MonoBehaviour
 
             lineRend.enabled = false;
             isDragging = false;
+            stick.gameObject.SetActive(false);
         }
     }
 
@@ -78,5 +82,23 @@ public class DragandShoot : MonoBehaviour
             points[i] = point;
         }
         lineRend.SetPositions(points);
+
+        if (initalForce != Vector2.zero)
+        {
+            stick.gameObject.SetActive(true);
+
+            // 1. Get the normalized opposite direction of the force
+            Vector2 oppositeDirection = -initalForce.normalized;
+
+            // 2. Position the stick behind the cue ball
+            Vector3 stickPosition = (Vector2)transform.position + (oppositeDirection * offset);
+            stick.position = stickPosition;
+
+            // 3. Rotate the stick to face the cue ball
+            float angle = Mathf.Atan2(oppositeDirection.y, oppositeDirection.x) * Mathf.Rad2Deg;
+
+            // Note: Adjust the angle offset (e.g., + 90 or + 180) depending on how your stick sprite/model is rotated by default
+            stick.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
 }
