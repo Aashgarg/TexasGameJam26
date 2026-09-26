@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerCollisions : MonoBehaviour
 {
-    [SerializeField] private Vector2 startingPosition;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,8 +22,10 @@ public class PlayerCollisions : MonoBehaviour
         {
             //adds score to hole
             //get one dollar
-            gameObject.transform.position = startingPosition;
-            
+            gameObject.SetActive(false);
+
         }
     }
+
+
 }

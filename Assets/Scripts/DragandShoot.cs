@@ -18,6 +18,7 @@ public class DragandShoot : MonoBehaviour
     private LineRenderer lineRend;
 
     private bool isDragging = false;
+    private bool canDrag = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,52 +32,62 @@ public class DragandShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (canDrag)
         {
-            stick.transform.parent = null;
-            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorldPos.z = 0;
-            
-            Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos);
-            if (hit != null && hit.gameObject.tag == "Player")
+            if (Input.GetMouseButtonDown(0))
             {
-                isDragging = true;
-                startPoint = mouseWorldPos;
-                startPoint.z = 0;
+                //stick.transform.parent = null;
+                Vector3 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
+                mouseWorldPos.z = 0;
+
+                Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos);
+                if (hit != null && hit.gameObject == gameObject)
+                {
+                    isDragging = true;
+                    startPoint = mouseWorldPos;
+                    startPoint.z = 0;
+                }
+            }
+            if (Input.GetMouseButton(0) && isDragging)
+            {
+                Vector3 currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
+                currentPoint.z = 0;
+
+                Vector3 dragVector = startPoint - currentPoint;
+                dragVector = Vector3.ClampMagnitude(dragVector, maxDragDistance);
+
+                ShowTrajectory(dragVector * power);
+            }
+            if (Input.GetMouseButtonUp(0) && isDragging)
+            {
+                //stick.gameObject.SetActive(false);
+                //stick.GetComponent<Collider2D>().enabled = false;
+                //stick.transform.SetParent(gameObject.transform);
+
+                Vector3 endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
+                endPoint.z = 0;
+
+                Vector2 force = (startPoint - endPoint) * power;
+                rb.AddForce(force, ForceMode2D.Impulse);
+
+                lineRend.enabled = false;
+                isDragging = false;
+                GameManager.instance.currentState = GameManager.GameState.TurnNotActive;
             }
         }
-        if (Input.GetMouseButton(0) && isDragging)
+        
+
+        if (GameManager.instance.currentState == GameManager.GameState.TurnActive)
         {
-            Vector3 currentPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            currentPoint.z = 0;
-
-            Vector3 dragVector = startPoint - currentPoint;
-            dragVector = Vector3.ClampMagnitude(dragVector, maxDragDistance);
-
-            ShowTrajectory(dragVector * power);
-        }
-        if (Input.GetMouseButtonUp(0) && isDragging)
-        {
-            stick.gameObject.SetActive(false);
-            //stick.GetComponent<Collider2D>().enabled = false;
-            //stick.transform.SetParent(gameObject.transform);
-
-            Vector3 endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-            endPoint.z = 0;
-
-            Vector2 force = (startPoint - endPoint) * power;
-            rb.AddForce(force, ForceMode2D.Impulse);
-
-            lineRend.enabled = false;
-            isDragging = false;
-        }
-
-        if (Mathf.Abs(rb.linearVelocity.y) <= .50 && Mathf.Abs(rb.linearVelocity.x) <= .50)
-        {
-            stick.gameObject.SetActive(true);
+            canDrag = true;
+            //stick.gameObject.SetActive(true);
             //stick.GetComponent<Collider2D>().enabled = true;
         }
-        Debug.Log(rb.linearVelocity);
+        else
+        {
+            canDrag = false;
+        }
+        //Debug.Log(rb.linearVelocity);
     }
 
 
@@ -99,7 +110,7 @@ public class DragandShoot : MonoBehaviour
 
         if (initalForce != Vector2.zero)
         {
-            stick.gameObject.SetActive(true);
+            //stick.gameObject.SetActive(true);
             Vector2 oppositeDirection = -initalForce.normalized;
 
             Vector3 stickPosition = (Vector2)transform.position + (oppositeDirection * offset);
