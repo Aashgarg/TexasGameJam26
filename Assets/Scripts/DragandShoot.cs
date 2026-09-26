@@ -10,6 +10,8 @@ public class DragandShoot : MonoBehaviour
     [SerializeField] private Transform stick;
     [SerializeField] private float offset;
 
+    [SerializeField] private Vector2 startingPosition;
+
     private Rigidbody2D rb;
     private Camera cam;
     private Vector3 startPoint;
@@ -31,11 +33,12 @@ public class DragandShoot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            stick.transform.parent = null;
             Vector3 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0;
-
+            
             Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos);
-            if (hit != null && hit.gameObject == gameObject)
+            if (hit != null && hit.gameObject.tag == "Player")
             {
                 isDragging = true;
                 startPoint = mouseWorldPos;
@@ -54,6 +57,10 @@ public class DragandShoot : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0) && isDragging)
         {
+            stick.gameObject.SetActive(false);
+            //stick.GetComponent<Collider2D>().enabled = false;
+            //stick.transform.SetParent(gameObject.transform);
+
             Vector3 endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
             endPoint.z = 0;
 
@@ -62,9 +69,16 @@ public class DragandShoot : MonoBehaviour
 
             lineRend.enabled = false;
             isDragging = false;
-            stick.gameObject.SetActive(false);
         }
+
+        if (Mathf.Abs(rb.linearVelocity.y) <= .50 && Mathf.Abs(rb.linearVelocity.x) <= .50)
+        {
+            stick.gameObject.SetActive(true);
+            //stick.GetComponent<Collider2D>().enabled = true;
+        }
+        Debug.Log(rb.linearVelocity);
     }
+
 
     void ShowTrajectory(Vector2 initalForce)
     {
@@ -86,19 +100,32 @@ public class DragandShoot : MonoBehaviour
         if (initalForce != Vector2.zero)
         {
             stick.gameObject.SetActive(true);
-
-            // 1. Get the normalized opposite direction of the force
             Vector2 oppositeDirection = -initalForce.normalized;
 
-            // 2. Position the stick behind the cue ball
             Vector3 stickPosition = (Vector2)transform.position + (oppositeDirection * offset);
             stick.position = stickPosition;
 
             // 3. Rotate the stick to face the cue ball
             float angle = Mathf.Atan2(oppositeDirection.y, oppositeDirection.x) * Mathf.Rad2Deg;
 
-            // Note: Adjust the angle offset (e.g., + 90 or + 180) depending on how your stick sprite/model is rotated by default
             stick.rotation = Quaternion.Euler(0, 0, angle);
+        }
+    }
+
+    void PositionStick()
+    {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collison)
+    {
+        if (collison.tag == "Hole")
+        {
+            //adds score to hole
+            //get one dollar
+            gameObject.transform.position = startingPosition;
+            rb.linearVelocity = Vector2.zero;
+
         }
     }
 }
