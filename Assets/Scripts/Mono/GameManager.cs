@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject waitingRoomUI;
     public GameObject interrogationUI;
 
+    public NPCData currentNPC;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,5 +36,12 @@ public class GameManager : MonoBehaviour
         waitingRoomUI.SetActive(false);
         currentState = GameState.Interrogation;
         interrogationUI.SetActive(true);
+    }
+
+    public void switchToWaitingRoom()
+    {
+        waitingRoomUI.SetActive(true);
+        currentState = GameState.waitingRoom;
+        interrogationUI.SetActive(false);
     }
 }

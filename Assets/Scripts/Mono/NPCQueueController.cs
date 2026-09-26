@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 
 public class NPCQueueController : MonoBehaviour
@@ -11,6 +12,8 @@ public class NPCQueueController : MonoBehaviour
     public TextMeshProUGUI nameText;
 
     private int currentIndex = 0;
+
+    public UnityEvent onNPCChosen;
 
     void Start()
     {
