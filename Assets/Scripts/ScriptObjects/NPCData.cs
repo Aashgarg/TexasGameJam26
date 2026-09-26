@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "NPCData", menuName = "Scriptable Objects/NPCData")]
 public class NPCData : ScriptableObject
@@ -8,5 +9,5 @@ public class NPCData : ScriptableObject
     public float startingStress;
     public float maxStress;
 
-    public DialogueNode[] nodes;
+    public List<DialogueNode> nodes;
 }
