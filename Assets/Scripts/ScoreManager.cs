@@ -5,6 +5,8 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager instance;
 
     public int totalScore;
+    private int currentMultiplier = 1;
+    private int basePoints = 1;
     private int currentStreak = 0;
 
     void Awake()
@@ -22,12 +24,13 @@ public class ScoreManager : MonoBehaviour
 
     public void RegisterChainCollision()
     {
-        int pointsToGive = 1 << currentStreak;
+        int pointsToGive = basePoints * currentMultiplier;
+        
 
         totalScore += pointsToGive;
         Debug.Log($"Collision! Streak: {currentStreak + 1} | Gained: {pointsToGive} | Total Score: {totalScore}");
 
-        currentStreak++;
+        currentMultiplier++;
 
     }
 
