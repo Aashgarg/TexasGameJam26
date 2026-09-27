@@ -34,6 +34,12 @@ public class ScoreManager : MonoBehaviour
 
     }
 
+    public void AddPoints(int points)
+    {
+        totalScore += points;
+        Debug.Log($"Scored! Gained: {points} | Total Score: {totalScore}");
+    }
+
     public void ResetStreak()
     {
         currentStreak = 0;
