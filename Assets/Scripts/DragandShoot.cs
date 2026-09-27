@@ -7,7 +7,6 @@ public class DragandShoot : MonoBehaviour
     [SerializeField] private float power;
     [SerializeField] private float maxDragDistance;
     [SerializeField] private int trajectoryResolution;
-    [SerializeField] private Transform stick;
     [SerializeField] private float offset;
 
     [SerializeField] private Vector2 startingPosition;
@@ -107,20 +106,6 @@ public class DragandShoot : MonoBehaviour
             points[i] = point;
         }
         lineRend.SetPositions(points);
-
-        if (initalForce != Vector2.zero)
-        {
-            //stick.gameObject.SetActive(true);
-            Vector2 oppositeDirection = -initalForce.normalized;
-
-            Vector3 stickPosition = (Vector2)transform.position + (oppositeDirection * offset);
-            stick.position = stickPosition;
-
-            // 3. Rotate the stick to face the cue ball
-            float angle = Mathf.Atan2(oppositeDirection.y, oppositeDirection.x) * Mathf.Rad2Deg;
-
-            stick.rotation = Quaternion.Euler(0, 0, angle);
-        }
     }
 
     void PositionStick()
