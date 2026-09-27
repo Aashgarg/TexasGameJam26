@@ -8,13 +8,13 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager instance;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI targetText;
-    public TextMeshProUGUI currencyText;
+    //public TextMeshProUGUI currencyText;
 
     public int totalScore = 0;
     public int targetScore = 50;
     public int targetIncrement = 50;
-    public int currency = 0;
-    public int currencyIncrement = 1;
+    //public int currency = 0;
+    //public int currencyIncrement = 1;
 
     private int currentMultiplier = 1;
     private int basePoints = 5;
@@ -56,8 +56,8 @@ public class ScoreManager : MonoBehaviour
         totalScore += points;
         Debug.Log($"Scored! Gained: {points} | Total Score: {totalScore}");
         scoreText.text = "Score: " + totalScore;
-        currency += currencyIncrement;
-        currencyText.text = "Currency: " + currency;
+        //currency += currencyIncrement;
+        //currencyText.text = "Currency: " + currency;
     }
 
     public void ResetStreak()
@@ -68,10 +68,10 @@ public class ScoreManager : MonoBehaviour
     public void StartNewRound()
     {
         totalScore = 0;
-        targetScore += targetIncrement;
+        targetScore *= 2;
         scoreText.text = "Score: " + totalScore;
         targetText.text = "Target: " + targetScore;
-        currencyText.text = "Currency: " + currency;
+        //currencyText.text = "Currency: " + currency;
 
     }
 }

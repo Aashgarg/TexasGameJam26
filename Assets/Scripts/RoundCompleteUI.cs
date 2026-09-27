@@ -34,7 +34,7 @@ public class RoundCompleteUI : MonoBehaviour
         panel.SetActive(true);
         messageText.text = "You beat the target score!";
         scoreText.text = "Score: " + ScoreManager.instance.totalScore;
-        currencyText.text = "Currency: " + ScoreManager.instance.currency;
+        //currencyText.text = "Currency: " + ScoreManager.instance.currency;
         
     }
 

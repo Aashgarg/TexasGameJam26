@@ -13,7 +13,7 @@ public class ShopManager : MonoBehaviour
     public List<Sprite> currentItems;
     public int offers = 3;
     public GameObject shopUI; // panel you toggle on/off
-    public TextMeshProUGUI currencyText;
+    //public TextMeshProUGUI currencyText;
     public Image person;
     public Sprite[] people;
     public GameObject poolUI;
@@ -39,7 +39,6 @@ public class ShopManager : MonoBehaviour
         int index = Random.Range(0, people.Length - 1);
         person.sprite = people[index];
         poolUI.SetActive(false);
-        currencyText.text = "Currency: " + ScoreManager.instance.currency;
 
         results = GetRandomBalls(offers);
 
@@ -62,26 +61,6 @@ public class ShopManager : MonoBehaviour
 
         return results;
     }
-    
-
-    /*public bool BuyBall(int index)
-    {
-        ShopOption option = currentItems[index];
-
-        if (ScoreManager.instance.currency < option.cost)
-        {
-            Debug.Log("Not enough currency for " + option.displayName);
-            return false;
-        }
-
-        ScoreManager.instance.currency -= option.cost;
-
-        GameObject newBall = Instantiate(option.ballPrefab);
-        newBall.tag = "Ball";
-        BallRandomizer.instance.balls.Add(newBall);
-
-        return true;
-    }*/
 
     public void CloseShop()
     {

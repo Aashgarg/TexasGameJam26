@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public int turnsTaken = 0;
     public int roundNumber = 1;
     public TextMeshProUGUI turnsText;
+    public TextMeshProUGUI[] poolTexts;
     public GameObject poolUI;
     public GameObject gameOver;
     public GameState currentState = GameState.TurnNotActive;
@@ -68,7 +69,6 @@ public class GameManager : MonoBehaviour
             PoolBall ballComponent = ball.GetComponent<PoolBall>();
             if (Mathf.Abs(rb.linearVelocity.y) >= .50 || Mathf.Abs(rb.linearVelocity.x) >= .50)
             {
-                
                 currentState = GameState.TurnNotActive;
                 return false;
             }
