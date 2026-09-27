@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PoolBall : MonoBehaviour
 {
-    public int baseValue = 10;
+    public int baseValue = 1;
     [SerializeField] private int currentMultiplier = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

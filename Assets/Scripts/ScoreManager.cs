@@ -1,8 +1,11 @@
 using UnityEngine;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+    
     public static ScoreManager instance;
+    public TextMeshProUGUI scoreText;
 
     public int totalScore;
     private int currentMultiplier = 1;
@@ -38,6 +41,7 @@ public class ScoreManager : MonoBehaviour
     {
         totalScore += points;
         Debug.Log($"Scored! Gained: {points} | Total Score: {totalScore}");
+        scoreText.text = "Score: " + totalScore;
     }
 
     public void ResetStreak()
