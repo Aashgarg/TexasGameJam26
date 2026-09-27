@@ -52,4 +52,9 @@ public class GameManager : MonoBehaviour
         currentState = GameState.TurnNotActive;
         return true;
     }
+
+    public void roundEnd()
+    {
+
+    }
 }

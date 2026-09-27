@@ -13,8 +13,11 @@ public class PoolHole : MonoBehaviour
             int finalBallScore = ball.GetFinalScoreValue();
 
             ScoreManager.instance.AddPoints(finalBallScore);
-
-            other.gameObject.SetActive(false);
+            if (!other.GetComponent<DragandShoot>())
+            {
+                other.gameObject.SetActive(false);
+            }
+            
         }
     }
 }

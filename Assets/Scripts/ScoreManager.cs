@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -8,9 +9,12 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public int totalScore;
+    public int targetScore;
     private int currentMultiplier = 1;
     private int basePoints = 1;
     private int currentStreak = 0;
+
+    public UnityEvent targetReached;
 
     void Awake()
     {
@@ -42,6 +46,10 @@ public class ScoreManager : MonoBehaviour
         totalScore += points;
         Debug.Log($"Scored! Gained: {points} | Total Score: {totalScore}");
         scoreText.text = "Score: " + totalScore;
+        if (totalScore >= targetScore)
+        {
+            targetReached?.Invoke();
+        }
     }
 
     public void ResetStreak()
