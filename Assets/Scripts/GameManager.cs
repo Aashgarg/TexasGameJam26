@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
         roundNumber++;
         turnsTaken = 0;
         ScoreManager.instance.StartNewRound();
+        turnsText.text = "TurnsLeft: " + turnsTaken;
         BallRandomizer.instance.Randomize();
         currentState = GameState.TurnActive;
     }

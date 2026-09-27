@@ -5,6 +5,6 @@ public class ShopOption : ScriptableObject
 {
     public int cost;
     public string displayName;
-    public GameObject ballPrefab;
+    public GameObject ballPrefab; //contains different sprites
     public bool bought = true;
 }

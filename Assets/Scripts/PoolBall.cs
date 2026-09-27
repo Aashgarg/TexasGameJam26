@@ -1,13 +1,16 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PoolBall : MonoBehaviour
 {
     public int baseValue = 1;
     [SerializeField] private int currentMultiplier = 1;
+    public AudioSource source;
+    public AudioClip hitSound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -18,8 +21,9 @@ public class PoolBall : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ball"))
+        if (collision.gameObject.CompareTag("Ball") || collision.gameObject.CompareTag("Wall"))
         {
+            source.PlayOneShot(hitSound);
             currentMultiplier++;
 
             Debug.Log($"{gameObject.name} multiplier is now x{currentMultiplier}!");

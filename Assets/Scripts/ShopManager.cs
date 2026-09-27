@@ -58,14 +58,14 @@ public class ShopManager : MonoBehaviour
         return result;
     }
 
-    public void BuyBall(int index)
+    public bool BuyBall(int index)
     {
         ShopOption option = currentItems[index];
 
         if (ScoreManager.instance.currency < option.cost)
         {
             Debug.Log("Not enough currency for " + option.displayName);
-            return;
+            return false;
         }
 
         ScoreManager.instance.currency -= option.cost;
@@ -73,6 +73,8 @@ public class ShopManager : MonoBehaviour
         GameObject newBall = Instantiate(option.ballPrefab);
         newBall.tag = "Ball";
         BallRandomizer.instance.balls.Add(newBall);
+
+        return true;
     }
 
     public void CloseShop()
@@ -81,4 +83,6 @@ public class ShopManager : MonoBehaviour
         poolUI.SetActive(true);
         GameManager.instance.StartNewRound();
     }
+
+
 }
