@@ -28,16 +28,9 @@ public class ShopManager : MonoBehaviour
 
     public void OpenShop()
     {
-        RollNewOffers();
         shopUI.SetActive(true);
         poolUI.SetActive(false);
         
-    }
-
-    private void RollNewOffers()
-    {
-        currentItems = GetRandomBalls(offers);
-        onOffersRefreshed?.Invoke();
     }
 
     private List<ShopOption> GetRandomBalls(int count)
