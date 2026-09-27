@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class PoolBall : MonoBehaviour
 {
     public int baseValue = 1;
+    public TextMeshProUGUI ballText;
     [SerializeField] private int currentMultiplier = 1;
     public AudioSource source;
     public AudioClip hitSound;
@@ -25,7 +27,7 @@ public class PoolBall : MonoBehaviour
         {
             source.PlayOneShot(hitSound);
             currentMultiplier++;
-
+            ballText.text = "" + baseValue * currentMultiplier;
             Debug.Log($"{gameObject.name} multiplier is now x{currentMultiplier}!");
         }
     }
