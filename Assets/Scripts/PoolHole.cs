@@ -13,6 +13,7 @@ public class PoolHole : MonoBehaviour
     {
         PoolBall ball = other.GetComponent<PoolBall>();
 
+        
         if (ball != null)
         {
             int finalBallScore = ball.GetFinalScoreValue();
@@ -24,7 +25,6 @@ public class PoolHole : MonoBehaviour
             {
                 other.gameObject.SetActive(false);
             }
-            
         }
     }
 }
