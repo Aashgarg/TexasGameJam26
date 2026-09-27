@@ -71,7 +71,7 @@ public class DragandShoot : MonoBehaviour
 
                 lineRend.enabled = false;
                 isDragging = false;
-                GameManager.instance.currentState = GameManager.GameState.TurnNotActive;
+                GameManager.instance.UseTurn();
             }
         }
         
@@ -106,11 +106,6 @@ public class DragandShoot : MonoBehaviour
             points[i] = point;
         }
         lineRend.SetPositions(points);
-    }
-
-    void PositionStick()
-    {
-
     }
 
     private void OnTriggerEnter2D(Collider2D collison)

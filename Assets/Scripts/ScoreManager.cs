@@ -7,15 +7,25 @@ public class ScoreManager : MonoBehaviour
     
     public static ScoreManager instance;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI targetText;
+    public TextMeshProUGUI currencyText;
 
-    public int totalScore;
-    public int targetScore;
+    public int totalScore = 0;
+    public int targetScore = 50;
+    public int targetIncrement = 50;
+    public int currency = 0;
+    public int currencyIncrement = 1;
+
     private int currentMultiplier = 1;
-    private int basePoints = 1;
+    private int basePoints = 5;
     private int currentStreak = 0;
 
     public UnityEvent targetReached;
 
+    private void Start()
+    {
+        targetText.text = "Target: " + targetScore;
+    }
     void Awake()
     {
         if (instance == null)
@@ -46,14 +56,22 @@ public class ScoreManager : MonoBehaviour
         totalScore += points;
         Debug.Log($"Scored! Gained: {points} | Total Score: {totalScore}");
         scoreText.text = "Score: " + totalScore;
-        if (totalScore >= targetScore)
-        {
-            targetReached?.Invoke();
-        }
+        currency += currencyIncrement;
+        currencyText.text = "Currency: " + currency;
     }
 
     public void ResetStreak()
     {
         currentStreak = 0;
+    }
+
+    public void StartNewRound()
+    {
+        totalScore = 0;
+        targetScore += targetIncrement;
+        scoreText.text = "Score: " + totalScore;
+        targetText.text = "Target: " + targetScore;
+        currencyText.text = "Currency: " + currency;
+
     }
 }
