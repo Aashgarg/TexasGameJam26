@@ -56,8 +56,6 @@ public class ScoreManager : MonoBehaviour
         totalScore += points;
         Debug.Log($"Scored! Gained: {points} | Total Score: {totalScore}");
         scoreText.text = "Score: " + totalScore;
-        //currency += currencyIncrement;
-        //currencyText.text = "Currency: " + currency;
     }
 
     public void ResetStreak()

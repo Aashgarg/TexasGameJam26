@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI[] poolTexts;
     public GameObject poolUI;
     public GameObject gameOver;
+    public TextMeshProUGUI finalScore;
     public GameState currentState = GameState.TurnNotActive;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -67,7 +68,7 @@ public class GameManager : MonoBehaviour
         {
             Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
             PoolBall ballComponent = ball.GetComponent<PoolBall>();
-            if (Mathf.Abs(rb.linearVelocity.y) >= .50 || Mathf.Abs(rb.linearVelocity.x) >= .50)
+            if (Mathf.Abs(rb.linearVelocity.y) >= 5 && Mathf.Abs(rb.linearVelocity.x) >= 5)
             {
                 currentState = GameState.TurnNotActive;
                 return false;
@@ -125,6 +126,7 @@ public class GameManager : MonoBehaviour
         currentState = GameState.GameOver;
         Debug.Log("Game Over — final score: " + ScoreManager.instance.totalScore);
         gameOver.SetActive(true);
+        finalScore.text = "Final Score: " + ScoreManager.instance.totalScore;
         // hook up a game-over UI here, or call StartNewRound() instead if you'd
         // rather just reset the round than truly end the run
     }
